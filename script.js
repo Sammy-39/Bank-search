@@ -49,6 +49,8 @@ formElement.addEventListener('submit',(event)=>{
 
     removePreviuosResult()
 
+    removeErrMsg()
+
     document.querySelector(".form").append(spinnerElem)
 
     var inputElement = document.querySelector(".search-input")
@@ -70,7 +72,7 @@ formElement.addEventListener('submit',(event)=>{
     .then((data)=>{
 
         removeSpinner()
-        
+
         if(data === "Not Found") {
             addErrMsg("Enter valid IFSC Code")
         }
