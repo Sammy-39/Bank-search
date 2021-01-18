@@ -1,3 +1,9 @@
+//to create spinner element
+var spinnerElem = document.createElement("div")
+spinnerElem.setAttribute("class","spinner-border spin my-4")
+spinnerElem.setAttribute("style","width: 3rem; height: 3rem;")
+spinnerElem.setAttribute("role","status")
+spinnerElem.innerHTML = `<span class="sr-only">Loading...</span> `
 
 //to add error message to the form element
 function addErrMsg(msg){
@@ -25,6 +31,13 @@ function removePreviuosResult(){
     contentElem.style.display = "none";
 }
 
+//to remove spinner element
+function removeSpinner(){
+    if(document.querySelector(".spin")){
+        document.querySelector(".form").removeChild(document.querySelector(".spin"))
+    }
+}
+
 
 //to get the input IFSC code
 var formElement = document.querySelector(".form")
@@ -33,6 +46,10 @@ var ifscCode
 formElement.addEventListener('submit',(event)=>{
 
     event.preventDefault()
+
+    removePreviuosResult()
+
+    document.querySelector(".form").append(spinnerElem)
 
     var inputElement = document.querySelector(".search-input")
     ifscCode = inputElement.value
@@ -52,8 +69,8 @@ formElement.addEventListener('submit',(event)=>{
     getBankDetails(ifscCode)
     .then((data)=>{
 
-        removePreviuosResult()
-
+        removeSpinner()
+        
         if(data === "Not Found") {
             addErrMsg("Enter valid IFSC Code")
         }
@@ -83,7 +100,6 @@ formElement.addEventListener('submit',(event)=>{
     })
     .catch((err)=>{
         
-        removePreviuosResult()
         addErrMsg("Data not available")
     })
 })
